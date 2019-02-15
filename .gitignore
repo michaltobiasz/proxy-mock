@@ -22,5 +22,5 @@ gradle-app.setting
 extension
 
 # Ignore IntelliJ
-.idea
-out
+.idea/
+/out/
