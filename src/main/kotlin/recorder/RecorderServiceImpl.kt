@@ -64,10 +64,10 @@ class RecorderServiceImpl(private val dbService: DbService) : RecorderService {
 
     override fun getRecordByPath(path: String, resultHandler: Handler<AsyncResult<Record>>): RecorderService {
         val record = records[path]
-        if (record != null) {
-            resultHandler.handle(succeededFuture(record))
-        } else {
+        if (record == null) {
             resultHandler.handle(failedFuture("$RECORD_NOT_FOUND_MSG: $path"))
+        } else {
+            resultHandler.handle(succeededFuture(record))
         }
         return this
     }

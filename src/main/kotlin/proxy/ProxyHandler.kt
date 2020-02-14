@@ -21,7 +21,6 @@ import org.reflections.Reflections
 import recorder.Record
 import recorder.reactivex.RecorderService
 
-//TODO refactor class to use RxJava
 class ProxyHandler(private val config: JsonObject, private val recorderService: RecorderService) :
     Handler<RoutingContext> {
 

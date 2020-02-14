@@ -7,6 +7,6 @@ import io.vertx.core.MultiMap
 @Name(value = "voidHeaderManipulator")
 class VoidHeaderManipulator : HeadersManipulator {
     override fun modify(headers: MultiMap) {
-        println(headers)
+        // do nothing
     }
 }

@@ -64,8 +64,8 @@ class DbServiceImpl(private val dbClient: JDBCClient, private val queries: JsonO
             .map { list ->
                 list.stream()
                     .map { json -> json.getString(T_RECORD_COLUMN) }
-                    .map { jsonString -> JsonObject(jsonString) }
-                    .map { jsonRecord -> Record(jsonRecord) }
+                    .map(::JsonObject)
+                    .map(::Record)
                     .collect(Collectors.toList())
             }
             .subscribe(SingleHelper.toObserver(resultHandler))
@@ -77,7 +77,7 @@ class DbServiceImpl(private val dbClient: JDBCClient, private val queries: JsonO
             .map { resultSet -> resultSet.rows }
             .map { list ->
                 list.stream()
-                    .map { row -> recordMapper(row) }
+                    .map(this@DbServiceImpl::recordMapper)
                     .collect(Collectors.toList())
             }
             .subscribe(SingleHelper.toObserver(resultHandler))
@@ -89,7 +89,7 @@ class DbServiceImpl(private val dbClient: JDBCClient, private val queries: JsonO
 
         this.dbClient.rxQueryWithParams(this.queries.getString(Q_GET_RECORD), params)
             .map { resultSet -> resultSet.rows.getOrElse(0) { JsonObject().put(T_RECORD_COLUMN, "{}") } }
-            .map { row -> recordMapper(row) }
+            .map(this@DbServiceImpl::recordMapper)
             .subscribe(SingleHelper.toObserver(resultHandler))
         return this
     }
